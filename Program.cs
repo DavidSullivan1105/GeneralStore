@@ -1,3 +1,4 @@
+using Microsoft.EntityFrameworkCore;
 internal class Program
 {
     private static void Main(string[] args)
@@ -11,7 +12,7 @@ internal class Program
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddSwaggerGen();
 
-         builder.Services.AddDbContext<RestaurantDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+        builder.Services.AddDbContext<DbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 
         var app = builder.Build();
@@ -32,21 +33,21 @@ internal class Program
 
         app.Run();
     }
-        public void ConfigureServices(IServiceCollection services)
-        {
-            services.AddControllers();
-            services.AddSwaggerGen(c =>
-            {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "GeneralStoreAPI", Version = "v1" });
-            });
-            services.AddHttpsRedirection(options => options.HttpsPort = 443);
-            services.AddDbContext<RestaurantDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
-        }
-        public static IHostBuilder CreateHostBuilder(string[] args) =>
-            Host.CreateDefaultBuilder(args)
-            .ConfigureWebHostDefaults(webBuilder =>
-            {
-                webBuilder.UseStartup<StartupBase>();
-                webBuilder.UseUrls("http://localhost:80", "https://localhost:443");
-            });
+    //     public void ConfigureServices(IServiceCollection services)
+    //     {
+    //         services.AddControllers();
+    //         services.AddSwaggerGen(c =>
+    //         {
+    //             c.SwaggerDoc("v1", new OpenApiInfo { Title = "GeneralStoreAPI", Version = "v1" });
+    //         });
+    //         services.AddHttpsRedirection(options => options.HttpsPort = 443);
+    //         services.AddDbContext<RestaurantDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+    //     }
+    //     public static IHostBuilder CreateHostBuilder(string[] args) =>
+    //         Host.CreateDefaultBuilder(args)
+    //         .ConfigureWebHostDefaults(webBuilder =>
+    //         {
+    //             webBuilder.UseStartup<StartupBase>();
+    //             webBuilder.UseUrls("http://localhost:80", "https://localhost:443");
+    //         });
     };
